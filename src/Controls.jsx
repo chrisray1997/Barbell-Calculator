@@ -76,10 +76,21 @@ function Controls({
               Clear
             </button>
             <button
-              onClick={() => setInventoryStr(Object.fromEntries(DEFAULT_PLATES.map((s, i) => [s, String(4 - Math.min(i, 2))])))}
+              onClick={() => {
+                const preset = typeof loadQuickStock === 'function' ? loadQuickStock() : Object.fromEntries(DEFAULT_PLATES.map((s, i) => [s, String(4 - Math.min(i, 2))]));
+                setInventoryStr(preset);
+              }}
               className="px-3 py-2 rounded-xl bg-emerald-600/90 hover:bg-emerald-600 text-sm"
             >
-              Quick stock
+              Apply Quick Stock
+            </button>
+            <button
+              onClick={() => {
+                if (typeof saveQuickStock === 'function') saveQuickStock(inventoryStr);
+              }}
+              className="px-3 py-2 rounded-xl bg-indigo-600/90 hover:bg-indigo-600 text-sm"
+            >
+              Save Quick Stock
             </button>
           </div>
         </div>
@@ -128,4 +139,3 @@ function Controls({
     </Motion.div>
   );
 }
-

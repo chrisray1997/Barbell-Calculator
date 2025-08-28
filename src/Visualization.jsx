@@ -1,18 +1,11 @@
-function Visualization({ canvasRef, zoom, setZoom }) {
+function Visualization({ canvasRef }) {
   return (
     <Motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-6 shadow-2xl flex flex-col">
       <div className="flex items-center justify-between gap-4">
         <h2 className="text-lg font-semibold">Visualization</h2>
-        <div className="flex items-center gap-3 text-sm text-slate-300">
-          <span>Zoom</span>
-          <input type="range" min={60} max={160} value={zoom} onChange={(e) => setZoom(Number(e.target.value))} className="w-40" />
-          <span className="tabular-nums">{zoom}%</span>
-        </div>
       </div>
       <div className="mt-4 rounded-2xl overflow-hidden border border-white/10">
-        <div style={{ transform: `scale(${zoom / 100})`, transformOrigin: "top left" }}>
-          <canvas ref={canvasRef} className="block" />
-        </div>
+        <canvas ref={canvasRef} className="block w-full h-auto" style={{ display: 'block', width: '100%', height: 'auto' }} />
       </div>
 
       {/* Color Key */}
@@ -30,4 +23,3 @@ function Visualization({ canvasRef, zoom, setZoom }) {
     </Motion.div>
   );
 }
-

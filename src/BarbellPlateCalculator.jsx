@@ -1,10 +1,10 @@
-const { useMemo, useState } = React;
+const { useMemo, useState, useEffect } = React;
 
 function BarbellPlateCalculator() {
-  const [targetStr, setTargetStr] = useState("225");
-  const [barStr, setBarStr] = useState("45");
-  const [zoom, setZoom] = useState(100);
-  const [inventoryStr, setInventoryStr] = useState(() => Object.fromEntries(DEFAULT_PLATES.map((s) => [s, "4"])));
+  const saved = typeof loadSavedState === 'function' ? loadSavedState() : null;
+  const [targetStr, setTargetStr] = useState(saved?.targetStr ?? "225");
+  const [barStr, setBarStr] = useState(saved?.barStr ?? "45");
+  const [inventoryStr, setInventoryStr] = useState(() => saved?.inventoryStr ?? Object.fromEntries(DEFAULT_PLATES.map((s) => [s, "4"])));
 
   const target = useMemo(() => parseNonNegFloat(targetStr, 0), [targetStr]);
   const barWeight = useMemo(() => parseNonNegFloat(barStr, 45), [barStr]);
@@ -17,6 +17,13 @@ function BarbellPlateCalculator() {
   const result = useMemo(() => computeLayout({ target, bar: barWeight, inventory }), [target, barWeight, inventory]);
   const canvasRef = useCanvasDraw(result.ok ? result.perSide : {}, barWeight);
   const totalPlates = useMemo(() => Object.entries(result.ok ? result.perSide : {}).reduce((acc, [_, c]) => acc + c * 2, 0), [result]);
+
+  // Persist key state to localStorage
+  useEffect(() => {
+    if (typeof saveState === 'function') {
+      saveState({ targetStr, barStr, inventoryStr });
+    }
+  }, [targetStr, barStr, inventoryStr]);
 
   const handleNumberInput = (setter) => (e) => {
     setter(e.target.value);
@@ -43,9 +50,8 @@ function BarbellPlateCalculator() {
           handleNumberInput={handleNumberInput}
           commitNonNeg={commitNonNeg}
         />
-        <Visualization canvasRef={canvasRef} zoom={zoom} setZoom={setZoom} />
+        <Visualization canvasRef={canvasRef} />
       </div>
     </div>
   );
 }
-

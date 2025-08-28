@@ -19,7 +19,8 @@ function useCanvasDraw(perSide, barWeight) {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
 
-    const W = (canvas.width = 1700);
+    // Use a larger drawing buffer for crisper scaling and full-bar view
+    const W = (canvas.width = 1800);
     const H = (canvas.height = 560);
 
     ctx.fillStyle = "#0b1220";
@@ -48,7 +49,8 @@ function useCanvasDraw(perSide, barWeight) {
     ctx.fillRect(rightSleeveEnd - sleeveLength, centerY - 24, sleeveLength, 48);
 
     const sideSizes = Object.keys(perSide).map(Number).sort((a, b) => a - b);
-    const baseGap = 10;
+    // Increase base gap for better visual separation, especially for small plates
+    const baseGap = 28;
 
     const drawSide = (isLeft) => {
       let accumulated = 0;
@@ -57,25 +59,31 @@ function useCanvasDraw(perSide, barWeight) {
         for (let i = 0; i < count; i++) {
           const idx = DEFAULT_PLATES.indexOf(size);
           const color = COLORS[(idx >= 0 ? idx : 0) % COLORS.length];
-          const thickness = Math.max(14, Math.min(52, size));
+          const thickness = Math.max(16, Math.min(56, size));
           const height = 220 + Math.min(150, size * 4);
           const y = centerY - height / 2;
-          const gap = baseGap + (thickness < 20 ? 8 : 0);
+          // Provide additional gap for small plates so their labels don't crowd
+          const extraGap = size <= 2.5 ? 22 : size <= 5 ? 18 : size <= 10 ? 14 : size <= 25 ? 10 : 6;
+          const gap = baseGap + extraGap;
           const x = isLeft ? leftSleeveStart + 8 + accumulated : rightSleeveEnd - 8 - accumulated - thickness;
 
+          // Plate body with subtle inner shadow and outer stroke to separate plates
           ctx.fillStyle = color;
           ctx.fillRect(x, y, thickness, height);
           ctx.fillStyle = "rgba(0,0,0,0.22)";
           ctx.fillRect(x + 3, y + 10, thickness - 6, height - 20);
+          ctx.lineWidth = 2;
+          ctx.strokeStyle = "rgba(255,255,255,0.35)";
+          ctx.strokeRect(x + 0.5, y + 0.5, thickness - 1, height - 1);
 
           const label = String(size);
-          ctx.font = "900 30px ui-sans-serif, system-ui, -apple-system";
+          ctx.font = "900 38px ui-sans-serif, system-ui, -apple-system";
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
           const tw = ctx.measureText(label).width;
-          const padX = 10, padY = 6;
-          const badgeW = Math.max(tw + padX * 2, thickness - 4);
-          const badgeH = 38;
+          const padX = 14, padY = 9;
+          const badgeW = Math.max(tw + padX * 2, thickness - 6);
+          const badgeH = 50;
           const cx = x + thickness / 2;
           const cy = y + height / 2;
           const bx = cx - badgeW / 2;
@@ -115,4 +123,3 @@ function useCanvasDraw(perSide, barWeight) {
 
   return canvasRef;
 }
-
