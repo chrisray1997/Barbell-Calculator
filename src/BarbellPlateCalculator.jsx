@@ -34,7 +34,7 @@ function BarbellPlateCalculator() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 text-slate-100 flex items-start justify-center p-8">
+    <div className="min-h-screen w-full bg-blue-950 text-slate-100 flex items-start justify-center p-8">
       <div className="w-full max-w-7xl grid grid-cols-1 xl:grid-cols-2 gap-8">
         <Controls
           targetStr={targetStr}
