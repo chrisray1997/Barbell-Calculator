@@ -12,3 +12,19 @@ Quick start options
 - VS Code: use the Live Server extension
 
 Once served, open `index.html` at the local URL and the app will render.
+
+## Deploy to GitHub Pages
+
+This project is pure static HTML/JS/CSS, so it can be published directly with GitHub Pages. A workflow is included.
+
+Steps
+- Push the repo to GitHub.
+- In the GitHub UI, go to Settings → Pages.
+- Under Build and deployment, set Source to “GitHub Actions”.
+- Ensure your default branch is `main` or `master` (the workflow listens to both).
+- Push to your default branch; the `Deploy to GitHub Pages` workflow will build and publish.
+
+Notes
+- `.nojekyll` is included to disable Jekyll processing.
+- All script paths are relative, so hosting under `/<repo-name>/` works without changes.
+- If you use a custom domain, add a `CNAME` file at the repo root with your domain.
