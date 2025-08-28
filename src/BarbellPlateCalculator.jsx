@@ -34,8 +34,8 @@ function BarbellPlateCalculator() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-stone-950 via-amber-950 to-stone-900 text-slate-100 flex items-start justify-center p-6">
-      <div className="w-full max-w-6xl grid grid-cols-1 xl:grid-cols-2 gap-6">
+    <div className="min-h-screen w-full bg-gradient-to-br from-stone-950 via-amber-950 to-stone-900 text-slate-100 flex items-start justify-center p-4 sm:p-6">
+      <div className="w-full max-w-6xl grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
         <Controls
           targetStr={targetStr}
           setTargetStr={setTargetStr}
