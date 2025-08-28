@@ -16,13 +16,11 @@
       /* Fallback layout CSS for GitHub Pages: ensures mobile ordering/sticky
          even if Tailwind Play CDN misses dynamic classes at first paint. */
       .app-layout { display: grid; grid-template-columns: 1fr; gap: 16px; }
+      @media (min-width: 640px) { .app-layout { gap: 24px; } }
       @media (min-width: 1024px) {
         .app-layout { grid-template-columns: 1fr 1fr; }
-        .app-visual { order: 2; }
+        .app-visual { order: 2; position: sticky; top: 8px; z-index: 10; }
         .app-controls { order: 1; }
-      }
-      @media (max-width: 1023.98px) {
-        .app-visual { position: sticky; top: 8px; z-index: 10; }
       }
     </style>
   </head>
