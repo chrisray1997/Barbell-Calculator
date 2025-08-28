@@ -35,12 +35,12 @@ function BarbellPlateCalculator() {
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-stone-950 via-amber-950 to-stone-900 text-slate-100 flex items-start justify-center p-4 sm:p-6">
-      <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 items-start">
+      <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 items-start app-layout">
         {/* Show visualization first on mobile; side-by-side on xl */}
-        <div className="order-1 lg:order-2">
+        <div className="order-1 lg:order-2 app-visual">
           <Visualization canvasRef={canvasRef} />
         </div>
-        <div className="order-2 lg:order-1">
+        <div className="order-2 lg:order-1 app-controls">
         <Controls
           targetStr={targetStr}
           setTargetStr={setTargetStr}

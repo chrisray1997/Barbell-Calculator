@@ -67,3 +67,7 @@ Notes
 - `.nojekyll` is included to disable Jekyll processing.
 - All script paths are relative, so hosting under `/<repo-name>/` works without changes.
 - If you use a custom domain, add a `CNAME` file at the repo root with your domain.
+
+Troubleshooting
+- If a previous Jekyll workflow overrides the static deployment, the site can look outdated or missing recent styles. This repo ships two workflows; the Jekyll one is disabled by default (`.github/workflows/jekyll-gh-pages.yml`) so only the static Pages workflow (`pages.yml`) runs on push.
+- GitHub Pages and the Tailwind Play CDN can race on first paint. To avoid any flicker or missing responsive styles, `index.html` also includes small fallback CSS (class names `app-layout`, `app-visual`, `app-controls`) that guarantees the mobile ordering and sticky behavior without Tailwind.

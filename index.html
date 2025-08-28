@@ -13,6 +13,17 @@
     <style>
       html, body, #root { height: 100%; }
       body { margin: 0; background: #0b1220; }
+      /* Fallback layout CSS for GitHub Pages: ensures mobile ordering/sticky
+         even if Tailwind Play CDN misses dynamic classes at first paint. */
+      .app-layout { display: grid; grid-template-columns: 1fr; gap: 16px; }
+      @media (min-width: 1024px) {
+        .app-layout { grid-template-columns: 1fr 1fr; }
+        .app-visual { order: 2; }
+        .app-controls { order: 1; }
+      }
+      @media (max-width: 1023.98px) {
+        .app-visual { position: sticky; top: 8px; z-index: 10; }
+      }
     </style>
   </head>
   <body>
