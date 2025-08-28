@@ -57,9 +57,14 @@
       }
       if (window.caches) {
         caches.keys().then(function (keys) {
-          keys.forEach(function (key) {
-            caches.delete(key);
-          });
+          keys
+            // Only clear caches created by this app
+            .filter(function (key) {
+              return key.startsWith('barbell-calculator');
+            })
+            .forEach(function (key) {
+              caches.delete(key);
+            });
         });
       }
     </script>
