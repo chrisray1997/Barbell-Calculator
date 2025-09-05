@@ -6,8 +6,8 @@ function BarbellPlateCalculator() {
   const [barStr, setBarStr] = useState(saved?.barStr ?? "45");
   const [inventoryStr, setInventoryStr] = useState(() => saved?.inventoryStr ?? Object.fromEntries(DEFAULT_PLATES.map((s) => [s, "4"])));
 
-  const target = useMemo(() => parseNonNegFloat(targetStr, 0), [targetStr]);
-  const barWeight = useMemo(() => parseNonNegFloat(barStr, 45), [barStr]);
+  const target = useMemo(() => roundTo(parseNonNegFloat(targetStr, 0), 5), [targetStr]);
+  const barWeight = useMemo(() => roundTo(parseNonNegFloat(barStr, 45), 5), [barStr]);
   const inventory = useMemo(() => {
     const obj = {};
     for (const s of DEFAULT_PLATES) obj[s] = parseNonNegInt(inventoryStr[s] ?? 0, 0);
@@ -28,9 +28,14 @@ function BarbellPlateCalculator() {
   const handleNumberInput = (setter) => (e) => {
     setter(e.target.value);
   };
-  const commitNonNeg = (setter, fallback) => (e) => {
+  const commitNonNeg = (setter, fallback, step) => (e) => {
     const v = e.target.value.trim();
-    if (v === "") setter(String(fallback));
+    if (v === "") {
+      setter(String(fallback));
+    } else {
+      const n = parseNonNegFloat(v, fallback);
+      setter(String(step ? roundTo(n, step) : n));
+    }
   };
 
   return (

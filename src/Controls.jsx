@@ -33,7 +33,7 @@ function Controls({
             autoComplete="off"
             value={targetStr}
             onChange={handleNumberInput(setTargetStr)}
-            onBlur={commitNonNeg(setTargetStr, 0)}
+            onBlur={commitNonNeg(setTargetStr, 0, 5)}
             className="bg-white/10 border border-white/10 rounded-xl px-3 py-3 min-h-[44px] text-base outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
             placeholder="e.g. 225"
           />
@@ -49,7 +49,7 @@ function Controls({
               autoComplete="off"
               value={barStr}
               onChange={handleNumberInput(setBarStr)}
-              onBlur={commitNonNeg(setBarStr, 45)}
+              onBlur={commitNonNeg(setBarStr, 45, 5)}
               className="bg-white/10 border border-white/10 rounded-xl px-3 py-3 min-h-[44px] text-base outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
               placeholder="45"
             />
